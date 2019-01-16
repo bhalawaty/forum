@@ -12,18 +12,27 @@ class ParticipateInFormTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function guests_may_not_create_threads()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $thread = make('App\Thread');
+        $this->post('/threads', $thread->toArray());
+
+    }
+
+    /** @test */
     public function a_auth_user_can_participate_in_form()
     {
 
-        $this->be(factory('App\User')->create());
+        $this->signIn();
 
-        $thread=factory('App\Thread')->create();
+        $thread=create('App\Thread');
 
-        $reply=factory('App\Reply')->make();
+        $reply=create('App\Reply');
 
         $this->post($thread->path().'/replies',$reply->ToArray());
 
         $this->get($thread->path())
             ->assertSee($reply->body);
-    }
+        }
 }

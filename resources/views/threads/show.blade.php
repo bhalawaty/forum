@@ -28,7 +28,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <form action="/threads/{{$thread->id}}/replies" method="Post">
+                <form action="/threads/{{$thread->channel->slug}}/{{$thread->id}}/replies" method="Post">
                     {{csrf_field()}}
                     <div class="form-group">
                         <textarea type="text" class="form-control" id="body" name="body" placeholder="Add ur Comment" rows="5" ></textarea>
