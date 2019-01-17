@@ -14,7 +14,22 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_replies_have_owner()
 {
-    $reply=factory('App\Reply')->create();
+    $reply=make('App\Reply');
     $this->assertInstanceOf('App\User',$reply->owner);
 }
+
+    /** @test */
+    public function a_thread_must_have_body()
+    {
+        $this->publishThread(['body'=>null])
+            ->assertSessionHasErrors('body');
+    }
+    public function publishThread($check_validate=[]){
+
+        $this->expectException('Illuminate\Validation\ValidationException');
+        $this->signIn();
+        $thread=make('App\Thread',$check_validate);
+        return  $this->post('/threads',$thread->toArray());
+
+    }
 }

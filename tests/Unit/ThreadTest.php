@@ -39,6 +39,43 @@ class ThreadTest extends TestCase
 
     }
 
+  /** @test */
+        public function a_thread_must_have_title()
+{
+    $this->publishThread(['title'=>null])
+            ->assertSessionHasErrors('title');
+}
+
+    /** @test */
+    public function a_thread_must_have_body()
+    {
+        $this->publishThread(['body'=>null])
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function a_thread_must_have_channel()
+    {
+        factory('App\Channel',2)->create();
+
+        $this->publishThread(['channel_id'=>null])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->publishThread(['channel_id'=>6575675])
+            ->assertSessionHasErrors('channel_id');
+
+
+    }
+
+
+    public function publishThread($check_validate=[]){
+
+    $this->expectException('Illuminate\Validation\ValidationException');
+    $this->signIn();
+    $thread=make('App\Thread',$check_validate);
+  return  $this->post('/threads',$thread->toArray());
+
+}
 
 }
 

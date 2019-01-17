@@ -28,7 +28,7 @@ class ParticipateInFormTest extends TestCase
 
         $thread=create('App\Thread');
 
-        $reply=create('App\Reply');
+        $reply=make('App\Reply');
 
         $this->post($thread->path().'/replies',$reply->ToArray());
 
