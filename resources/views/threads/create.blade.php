@@ -12,14 +12,28 @@
         <form method="POST" action="/threads">
 
             {{csrf_field()}}
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" name="title" >
 
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Channels</label>
+                    </div>
+                    <select class="custom-select" id="channel_id" name="channel_id" required>
+                        <option value="">Choose one...</option>
+                        @foreach($channels as $channel)
+                            <option value="{{$channel->id}}">{{$channel->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
                 <label for="body">Body:</label>
-                <textarea type="text" class="form-control" id="body" name="body" ></textarea>
+                <textarea type="text" class="form-control" id="body" name="body" required></textarea>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Publish</button>

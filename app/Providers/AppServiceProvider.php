@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+
+use App\Channel;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\View\View;
+
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      \View::share('channels',Channel::all());
+
+
+
         Schema::defaultStringLength(191);
 
     }

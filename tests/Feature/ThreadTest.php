@@ -35,8 +35,7 @@ class ThreadTest extends TestCase
     }
 
    /** @test */
-
-   public function a_user_can_see_all_replies_accosiated_with_thread(){
+   public function a_user_can_see_all_replies_associated_with_thread(){
 
        $reply=create('App\Reply',['thread_id'=>$this->thread->id]);
 
@@ -44,6 +43,17 @@ class ThreadTest extends TestCase
            ->assertSee($reply->body);
 
 
+   }
+
+   /** @test */
+   public function a_thread_associated_with_channel(){
+       $channel= create('App\Channel');
+       $threadwithchannel=create('App\Thread',['channel_id'=>$channel->id]);
+       $threadwithoutchannel=create('App\Thread');
+
+       $this->get('/threads/'.$channel->slug)
+           ->assertSee($threadwithchannel->title)
+           ->assertDontSee($threadwithoutchannel->title);
    }
 
 

@@ -37,9 +37,10 @@ $factory->define(App\Thread::class, function (Faker $faker) {
 
 
 $factory->define(App\Channel::class, function (Faker $faker) {
+    $name=$faker->word;
     return [
-          'name'=>$faker->word,
-            'slug'=>$faker->word
+          'name'=>$name,
+            'slug'=>$name
     ];
 });
 

@@ -26,15 +26,30 @@
                 <a class="navbar-brand">
                     Forum
                 </a>
-                <a class="nav-link" href="/threads">All Threads</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                {{--<a class="nav-link" href="/threads">All Threads</a>--}}
+
+
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li><a class="nav-link" href="/threads">All Threads</a></li>
+                        <li><a class="nav-link" href="/threads/create">New Thread</a></li>
 
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Channels
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @foreach($channels as $channel)
+                        <a class="dropdown-item" href="/threads/{{$channel->slug}}">{{$channel->name}}</a>
+                            @endforeach
+                        </div>
+                        </li>
+
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
