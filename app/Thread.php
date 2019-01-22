@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -9,6 +10,14 @@ class Thread extends Model
 
     protected $guarded=[];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('RepliesCount', function (Builder $builder) {
+            $builder->withCount('replies');
+        });
+    }
 
     public function path(){
         return '/threads/'.$this->Channel->slug.'/'.$this->id;
@@ -35,5 +44,11 @@ class Thread extends Model
         return $this->replies()->create($reply);
 
 
+    }
+
+    public function scopeFilter($query, $filters)
+    {
+
+        return $filters->apply($query);
     }
 }

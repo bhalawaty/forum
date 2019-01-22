@@ -21,19 +21,19 @@
                     <select class="custom-select" id="channel_id" name="channel_id" required>
                         <option value="">Choose one...</option>
                         @foreach($channels as $channel)
-                            <option value="{{$channel->id}}">{{$channel->name}}</option>
+                            <option value="{{$channel->id}}" {{old('channel_id')==$channel->id ?'selected': ''}}>{{$channel->name}}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" value="{{old('title')}}" class="form-control" id="title" name="title" required>
             </div>
 
             <div class="form-group">
                 <label for="body">Body:</label>
-                <textarea type="text" class="form-control" id="body" name="body" required></textarea>
+                <textarea type="text" class="form-control" id="body" name="body" required>{{old('body')}}</textarea>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Publish</button>
