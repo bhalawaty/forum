@@ -10,8 +10,8 @@
                         <div class="card">
                             <article>
                                 <div class="card-header">
-                                    <div class="level" style="align-items: center;display: flex">
-                                        <h4 class="flex" style="flex: 1">
+                                    <div class="level">
+                                        <h4 class="flex">
                                             <a href="{{$thread->path()}}">
                                                 {{$thread->title}}
                                             </a>
@@ -20,7 +20,7 @@
                                                 {{str_plural('Reply',$thread->replies_count)}}</a> </strong>
                                     </div>
 
-                                    <a href="#">
+                                    <a href="{{ route('userProfile',$thread->creator)}}">
                                         {{$thread->creator->name}} </a>... at {{$thread->created_at->diffForHumans()}}
 
                                 </div>
