@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                @foreach($threads as $thread)
+                @forelse($threads as $thread)
                     <div class="form-group">
                         <div class="card">
                             <article>
@@ -29,7 +29,9 @@
 
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <h1>there are no threads at this time </h1>
+                @endforelse
 
 
             </div>

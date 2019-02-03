@@ -22,7 +22,6 @@ class ThreadTest extends TestCase
     /** @test */
     public function A_user_can_view_all_threads()
     {
-
         $this->get('/threads')
             ->assertSee($this->thread->title);
     }
@@ -32,6 +31,33 @@ class ThreadTest extends TestCase
     {
         $this->get($this->thread->path())
             ->assertSee($this->thread->title);
+    }
+
+
+    /** @test */
+    public function a_unauthorized_can_not_delete_threads()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+        $thread = create('App\Thread');
+
+        $this->delete($thread->path())->assertRedirect('/login');
+        $this->signIn();
+        $this->delete($thread->path())->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function a_auth_user_can_delete_threads()
+    {
+        $this->signIn();
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $reply = create('App\Reply', ['thread_id' => $thread->id]);
+
+
+        $response = $this->delete($thread->path());
+
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
     }
 
     /** @test */

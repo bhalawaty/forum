@@ -39,7 +39,7 @@ class Reply extends Model
 
     public function isFavored()
     {
-        return !!$this->favorites()->where('user_id', auth()->id())->count();
+        return !!$this->favorites->where('user_id', auth()->id())->count();
 
     }
 

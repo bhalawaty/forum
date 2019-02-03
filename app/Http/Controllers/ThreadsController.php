@@ -13,7 +13,7 @@ class ThreadsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->only(['store', 'create']);
+        $this->middleware('auth')->except(['show', 'index']);
     }
 
     public function index(Channel $channel, ThreadFilters $filters)
@@ -109,9 +109,14 @@ class ThreadsController extends Controller
      *
      * @param  \App\Thread $thread
      * @return \Illuminate\Http\Response
+     * /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Thread $thread)
+
+    public function destroy($channel, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+        $thread->delete();
+        return redirect('/threads');
     }
 }
