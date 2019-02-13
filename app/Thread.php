@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Activity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+
+    use RecordsActivity;
 
     protected $guarded=[];
     protected $with = ['creator', 'channel'];
@@ -20,8 +23,10 @@ class Thread extends Model
             $builder->withCount('replies');
         });
         static::deleting(function ($thread) {
-            $thread->replies()->delete();
+            $thread->replies->each->delete();
         });
+
+
     }
 
     public function path(){
@@ -48,7 +53,6 @@ class Thread extends Model
 
         return $this->replies()->create($reply);
 
-
     }
 
     public function scopeFilter($query, $filters)
@@ -58,20 +62,5 @@ class Thread extends Model
     }
 
 
-    public function favorites()
-    {
-        return $this->morphMany(Favorite::class, 'favorited');
-    }
-
-    public function favorite()
-    {
-        $attributes = ['user_id' => auth()->id()];
-
-        if (!$this->favorites()->where($attributes)->exists()) {
-
-            return $this->favorites()->create($attributes);
-        }
-
-    }
 
 }

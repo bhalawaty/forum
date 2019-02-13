@@ -25,14 +25,6 @@ class FavoritesTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    /** @test */
-    public function guests_may_not_favorite_threads()
-    {
-
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-        $this->post('threads/1/favorites')
-            ->assertRedirect('/login');
-    }
 
     /** @test */
     public function An_auth_user_can_favorites_replies()
@@ -61,29 +53,6 @@ class FavoritesTest extends TestCase
         $this->assertCount(1, $reply->favorites);
     }
 
-    /** @test */
-    public function An_auth_user_can_favorites_threads()
-    {
-        $this->signIn();
-        $thread = create('App\Thread');
 
-        $this->post('threads/' . $thread->id . '/favorites');
 
-        $this->assertCount(1, $thread->favorites);
-    }
-
-    /** @test */
-    public function An_auth_user_can_favorites_threads_once()
-    {
-        $this->signIn();
-        $thread = create('App\Thread');
-        try {
-            $this->post('threads/' . $thread->id . '/favorites');
-            $this->post('threads/' . $thread->id . '/favorites');
-
-        } catch (\Exception $e) {
-            $this->fail('xxxxxxxxxxxxxx');
-        }
-        $this->assertCount(1, $thread->favorites);
-    }
 }

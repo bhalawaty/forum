@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+
+    use RecordsActivity;
+
     protected $guarded = [];
     protected $with = ['owner', 'favorites'];
 
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
+    }
 
     public function owner()
     {
@@ -42,6 +49,7 @@ class Reply extends Model
         return !!$this->favorites->where('user_id', auth()->id())->count();
 
     }
+
 
     public function getFavoritesCountAttribute()
     {

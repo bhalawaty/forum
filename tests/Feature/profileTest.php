@@ -30,9 +30,9 @@ class profileTest extends TestCase
     /** @test */
     public function A_user_profile_has_user_threads()
     {
-        $user = create('App\User');
-        $thread = create('App\Thread', ['user_id' => $user->id]);
-        $this->get("/profiles/{$user->name}")
+        $this->signIn();
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $this->get("/profiles/" . auth()->user()->name)
             ->assertSee($thread->title)
             ->assertSee($thread->body);
 

@@ -20,9 +20,4 @@ class FavoritesController extends Controller
         return back();
     }
 
-    public function storethread(Thread $thread)
-    {
-        $thread->favorite();
-        return back();
-    }
 }
