@@ -10,6 +10,10 @@
     .flex {
         flex: 1
     }
+
+    [v-cloak] {
+        display: none
+    }
 </style>
 <head>
     <meta charset="utf-8">

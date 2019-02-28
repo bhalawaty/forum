@@ -8,10 +8,11 @@ class Reply extends Model
 {
 
     use RecordsActivity;
+    use Favoritable;
 
     protected $guarded = [];
     protected $with = ['owner', 'favorites'];
-
+    protected $appends = ['favoritesCount', 'isFavored'];
     public function thread()
     {
         return $this->belongsTo(Thread::class);
@@ -22,39 +23,10 @@ class Reply extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function favorites()
+    public function path()
     {
-        return $this->morphMany(Favorite::class, 'favorited');
+        return $this->thread->path() . '#reply-' . $this->id;
     }
 
-    public function favorite()
-    {
-        $attributes = ['user_id' => auth()->id()];
-
-        if (!$this->favorites()->where($attributes)->exists()) {
-
-            return $this->favorites()->create($attributes);
-        }
-
-    }
-
-    /**
-     *determine if current reply has been favorited.
-     *
-     * @return boolean
-     */
-
-    public function isFavored()
-    {
-        return !!$this->favorites->where('user_id', auth()->id())->count();
-
-    }
-
-
-    public function getFavoritesCountAttribute()
-    {
-
-        return $this->favorites->count();
-    }
 
 }
