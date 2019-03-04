@@ -1,4 +1,3 @@
-<reply :attributes="{{ $reply }}" inline-template v-cloak>
     <div class="form-group">
         <div id="reply-{{$reply->id}}" class="card">
             <div class="card-header">
@@ -14,12 +13,7 @@
                             <favorite :reply="{{$reply}}"></favorite>
                         </div>
                     @endif
-                    {{--<form method="POST" action="/replies/{{$reply->id}}/favorites">--}}
-                    {{--{{csrf_field()}}--}}
-                    {{--<button type="submit" class="btn btn-secondary " {{ $reply->isFavored() ? 'disabled': ''}}>--}}
-                    {{--{{$reply->favorites_count }}    {{str_plural('favorite',$reply->favorites_count)}}--}}
-                    {{--</button>--}}
-                    {{--</form>--}}
+
                 </div>
 
 
@@ -46,4 +40,3 @@
             @endcan
         </div>
     </div>
-</reply>

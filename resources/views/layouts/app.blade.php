@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
+<script>
+    window.App ={!! json_encode([
+    'csrfToken'=>csrf_token(),
+    'user'=>Auth::user(),
+    'signIn'=>Auth::check()
+    ])!!};
+</script>
 <style>
     .level {
         align-items: center;

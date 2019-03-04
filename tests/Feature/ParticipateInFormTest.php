@@ -21,18 +21,18 @@ class ParticipateInFormTest extends TestCase
     }
 
     /** @test */
-    public function a_auth_user_can_participate_in_form()
+    public function a_auth_user_can_participate_in_forum()
     {
 
         $this->signIn();
 
-        $thread=create('App\Thread');
+        $thread = create('App\Thread');
 
-        $reply=make('App\Reply');
+        $reply = make('App\Reply');
 
-        $this->post($thread->path().'/replies',$reply->ToArray());
+        $this->post($thread->path() . '/replies', $reply->ToArray());
 
-        $this->get($thread->path())
-            ->assertSee($reply->body);
-        }
+        $this->get($thread->path())->assertSee($reply->body);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
+    }
 }

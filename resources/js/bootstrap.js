@@ -1,6 +1,12 @@
 
 window._ = require('lodash');
 window.Vue = require('vue');
+
+
+Vue.prototype.authorize = function (handler) {
+    let user = window.App.user;
+    return user ? handler(user) : false;
+};
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -10,7 +16,7 @@ window.Vue = require('vue');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    // window.scrollTo(0,0);
     require('bootstrap');
 } catch (e) {}
 

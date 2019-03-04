@@ -125,5 +125,23 @@ class ThreadTest extends TestCase
 
     }
 
+    /** @test */
+    public function a_user_can_filter_thread_by_un_popularity()
+    {
+
+
+        $thread = create('App\Thread');
+        create('App\Reply', ['thread_id' => $thread->id]);
+
+        $response = $this->get('threads?unpopular=1');
+
+        $threadsFromResponse = $response->original->getData()['threads'];
+
+        $repliesCount = $threadsFromResponse->pluck('replies_count');
+
+        $this->assertCount(1, $repliesCount);
+
+
+    }
 
 }
