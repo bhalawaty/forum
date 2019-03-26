@@ -144,4 +144,14 @@ class ThreadTest extends TestCase
 
     }
 
+    /** @test */
+    public function it_knows_if_auth_user_subscribed_or_not()
+    {
+        $thread = create('App\Thread');
+        $this->signIn();
+        $this->assertFalse($thread->isSubscribedTo);
+        $thread->subscribe();
+
+        $this->assertTrue($thread->isSubscribedTo);
+    }
 }

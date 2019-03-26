@@ -66,10 +66,17 @@
                 <div class="col-md-4">
                     <div class="card">
 
-                        <div class="card-body">This Thread was published {{$thread->created_at->diffForHumans()}} by <a
-                                    href="{{ Route ('userProfile',$thread->creator)}}">{{$thread->creator->name}}</a>
-                            and currently has <span
-                                    v-text="repliesCount"></span> {{str_plural('comment',$thread->replies_count)}}
+                        <div class="card-body">
+                            <p>
+                                This Thread was published {{$thread->created_at->diffForHumans()}} by
+                                <a href="{{ Route ('userProfile',$thread->creator)}}">{{$thread->creator->name}}</a>
+                                and currently has <span
+                                        v-text="repliesCount"></span> {{str_plural('comment',$thread->replies_count)}}
+                            </p>
+                            <p>
+                                <subscribe-button
+                                        :active="{{$thread->isSubscribedTo ? 'true':'false' }}"></subscribe-button>
+                            </p>
                         </div>
 
                     </div>
