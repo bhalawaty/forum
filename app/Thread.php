@@ -100,10 +100,10 @@ class Thread extends Model
             ->exists();
     }
 
-    public function threadupdate($user)
+    public function threadupdate()
     {
 
-        $key = sprintf("users.%s.visits.%s", $user, $this->id);
+        $key = sprintf("users.%s.visits.%s", auth()->id(), $this->id);
 
         return $this->updated_at > cache($key);
     }
